@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Javier Morachimo | Analista de Datos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gray-50:  #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --accent:   #2563eb;
+      --accent-light: #eff6ff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--gray-800);
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2rem; height: 60px;
+    }
+    nav .brand { font-weight: 700; font-size: 1rem; color: var(--gray-900); }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; }
+    nav ul a { text-decoration: none; font-size: 0.875rem; color: var(--gray-600); font-weight: 500; transition: color .2s; }
+    nav ul a:hover { color: var(--accent); }
+
+    /* ─── HERO ─── */
+    .hero {
+      max-width: 860px; margin: 80px auto 0; padding: 0 1.5rem 80px;
+      display: flex; align-items: center; gap: 3.5rem;
+    }
+    .hero-photo {
+      flex-shrink: 0;
+      width: 160px; height: 160px; border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gray-200);
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    }
+    .hero-photo-placeholder {
+      flex-shrink: 0;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      border: 3px solid var(--gray-200);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; color: var(--accent);
+    }
+    .hero-text h1 { font-size: 2rem; font-weight: 700; color: var(--gray-900); line-height: 1.2; }
+    .hero-text .title { font-size: 1.05rem; color: var(--accent); font-weight: 600; margin: 6px 0 14px; }
+    .hero-text p { color: var(--gray-600); font-size: 0.95rem; max-width: 520px; }
+    .hero-links { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .hero-links a {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 16px; border-radius: 6px; font-size: 0.82rem; font-weight: 500;
+      text-decoration: none; transition: all .2s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-outline { border: 1.5px solid var(--gray-200); color: var(--gray-700); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── SECTIONS ─── */
+    section { max-width: 860px; margin: 0 auto; padding: 60px 1.5rem; }
+    section + section { border-top: 1px solid var(--gray-100); }
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .section-title { font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 24px; }
+
+    /* ─── SKILLS BADGES ─── */
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-badge {
+      padding: 5px 14px; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 500;
+      background: var(--gray-100); color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+    }
+
+    /* ─── PROJECTS GRID ─── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+
+    .card {
+      border: 1px solid var(--gray-200); border-radius: 12px;
+      overflow: hidden; transition: box-shadow .25s, transform .25s;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,.1); transform: translateY(-3px); }
+
+    .card-preview {
+      height: 140px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem; font-weight: 800; letter-spacing: -1px;
+      color: rgba(255,255,255,0.9); position: relative; overflow: hidden;
+    }
+    .card-preview span { position: relative; z-index: 1; }
+
+    /* Tool color themes */
+    .theme-pbi    { background: linear-gradient(135deg, #1a5fb4 0%, #2563eb 60%, #3b82f6 100%); }
+    .theme-tableau{ background: linear-gradient(135deg, #1b1b2f 0%, #2d2d44 50%, #f0b429 100%); }
+    .theme-excel  { background: linear-gradient(135deg, #166534 0%, #16a34a 60%, #4ade80 100%); }
+    .theme-looker { background: linear-gradient(135deg, #c2410c 0%, #ea580c 60%, #fb923c 100%); }
+    .theme-coming { background: linear-gradient(135deg, #374151 0%, #6b7280 100%); }
+
+    .card-body { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
+    .tool-badge {
+      display: inline-block; padding: 2px 9px; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 600; margin-bottom: 8px;
+    }
+    .badge-pbi     { background: #dbeafe; color: #1d4ed8; }
+    .badge-tableau { background: #fef9c3; color: #92400e; }
+    .badge-excel   { background: #dcfce7; color: #15803d; }
+    .badge-looker  { background: #ffedd5; color: #c2410c; }
+    .badge-coming  { background: var(--gray-100); color: var(--gray-600); }
+
+    .card-body h3 { font-size: 0.95rem; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; }
+    .card-body p  { font-size: 0.82rem; color: var(--gray-600); flex: 1; }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 14px; padding: 7px 14px; border-radius: 6px;
+      font-size: 0.8rem; font-weight: 600; text-decoration: none;
+      background: var(--accent); color: #fff; transition: background .2s;
+      align-self: flex-start;
+    }
+    .card-link:hover { background: #1d4ed8; }
+    .card-link.disabled {
+      background: var(--gray-200); color: var(--gray-400); cursor: default; pointer-events: none;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    .exp-item { margin-bottom: 28px; }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .exp-role { font-weight: 600; font-size: 0.95rem; color: var(--gray-900); }
+    .exp-company { font-size: 0.85rem; color: var(--accent); font-weight: 500; margin: 2px 0 6px; }
+    .exp-date { font-size: 0.8rem; color: var(--gray-400); white-space: nowrap; }
+    .exp-item ul { padding-left: 1rem; margin-top: 8px; }
+    .exp-item li { font-size: 0.85rem; color: var(--gray-600); margin-bottom: 4px; }
+
+    /* ─── CONTACT ─── */
+    .contact-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+    .contact-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border: 1px solid var(--gray-200); border-radius: 8px;
+      font-size: 0.85rem; color: var(--gray-700); text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .contact-item:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-icon { font-size: 1.1rem; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center; padding: 32px 1rem;
+      border-top: 1px solid var(--gray-100);
+      font-size: 0.8rem; color: var(--gray-400);
+    }
+
+    @media (max-width: 640px) {
+      .hero { flex-direction: column; text-align: center; gap: 1.5rem; margin-top: 48px; }
+      .hero-links { justify-content: center; }
+      .hero-text p { margin: 0 auto; }
+      .exp-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="brand">Javier Morachimo</span>
+  <ul>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <!--
+    Para añadir tu foto:
+    1. Guarda tu foto en la misma carpeta que este archivo con el nombre "photo.jpg"
+    2. Reemplaza el div .hero-photo-placeholder por:
+       <img src="photo.jpg" alt="Javier Morachimo" class="hero-photo" />
+  -->
+  <div class="hero-photo-placeholder">👤</div>
+
+  <div class="hero-text">
+    <h1>Javier Alexander<br/>Morachimo Echevarria</h1>
+    <div class="title">Analista de Datos</div>
+    <p>
+      Ingeniero de Sistemas con enfoque en Análisis de Datos. Experiencia en procesamiento y
+      modelado de datos mediante SQL, desarrollo de soluciones de visualización en Power BI,
+      Tableau y Looker Studio, y trabajo con plataformas como Snowflake y Google Cloud.
+      Orientado a la generación de insights estratégicos para la toma de decisiones.
+    </p>
+    <div class="hero-links">
+      <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+      <a href="mailto:jmorachimoe@hotmail.com" class="btn-outline">✉ Contactar</a>
+    </div>
+  </div>
+</div>
+
+<!-- HABILIDADES -->
+<section id="habilidades">
+  <div class="section-label">Stack</div>
+  <div class="section-title">Habilidades Técnicas</div>
+  <div class="skills">
+    <span class="skill-badge">SQL</span>
+    <span class="skill-badge">Python</span>
+    <span class="skill-badge">Power BI</span>
+    <span class="skill-badge">Tableau</span>
+    <span class="skill-badge">Looker Studio</span>
+    <span class="skill-badge">Excel</span>
+    <span class="skill-badge">Snowflake</span>
+    <span class="skill-badge">BigQuery</span>
+    <span class="skill-badge">Oracle</span>
+    <span class="skill-badge">Tableau Prep</span>
+    <span class="skill-badge">Data Vault</span>
+    <span class="skill-badge">Odoo CRM</span>
+    <span class="skill-badge">Google Cloud</span>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="section-label">Portfolio</div>
+  <div class="section-title">Proyectos</div>
+  <div class="projects-grid">
+
+    <!-- 1. Ventas y Marketing -->
+    <div class="card">
+      <div class="card-preview theme-pbi"><span>📊</span></div>
+      <div class="card-body">
+        <span class="tool-badge badge-pbi">Power BI</span>
+        <h3>Desempeño de Ventas y Marketing</h3>
+        <p>Dashboard de seguimiento de ingresos, costos, ganancias y conversión por canal, región y campaña de marketing.</p>
+        <a class="card-link" href="https://app.fabric.microsoft.com/view?r=eyJrIjoiNjAwYjVhYjgtNjE4YS00Y2Q1LWE0OGYtZDExMGMxNTIyNzM2IiwidCI6IjRkYWI3MDhlLTZkZmEtNDFhMC1hM2FlLTVjYjZhZjZkYWQwNyIsImMiOjR9" target="_blank" rel="noopener">
+          Ver dashboard ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Financiero -->
+    <div class="card">
+      <div class="card-preview theme-pbi"><span>💹</span></div>
+      <div class="card-body">
+        <span class="tool-badge badge-pbi">Power BI</span>
+        <h3>Control de Gestión Financiero</h3>
+        <p>Análisis de utilidad operacional, ingresos, costos y gastos con comparación entre períodos actual y previo.</p>
+        <a class="card-link" href="https://app.fabric.microsoft.com/view?r=eyJrIjoiZWQxNjVjNDItNjVmMS00ZDZiLWExZjYtODE0ZDdmNzIxNzU2IiwidCI6IjRkYWI3MDhlLTZkZmEtNDFhMC1hM2FlLTVjYjZhZjZkYWQwNyIsImMiOjR9" target="_blank" rel="noopener">
+          Ver dashboard ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Inmobiliario -->
+    <div class="card">
+      <div class="card-preview theme-tableau"><span>🏠</span></div>
+      <div class="card-body">
+        <span class="tool-badge badge-tableau">Tableau</span>
+        <h3>Mercado Inmobiliario</h3>
+        <p>Análisis de desempeño del mercado inmobiliario en Lima: ganancia, precio m², volumen por distrito y top vendedores.</p>
+        <a class="card-link" href="https://public.tableau.com/views/DesempeoInmobiliaria/Desempeo?:language=es-ES&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener">
+          Ver dashboard ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 4. Call Center -->
+    <div class="card">
+      <div class="card-preview theme-excel"><span>📞</span></div>
+      <div class="card-body">
+        <span class="tool-badge badge-excel">Excel</span>
+        <h3>Call Center de Ventas</h3>
+        <p>Dashboard de seguimiento de llamadas por agente, productos, tasas de éxito, abandono y tendencia mensual.</p>
+        <a class="card-link" href="https://1drv.ms/x/c/81637bcb9b3e4b41/IQCBqmClicz9Q5ja4o80hgk4AaJWji4l_dyVWneT8HLBKy4?e=IgmQSF" target="_blank" rel="noopener">
+          Ver dashboard ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 5. Looker Studio (próximamente) -->
+    <div class="card">
+      <div class="card-preview theme-coming"><span>⏳</span></div>
+      <div class="card-body">
+        <span class="tool-badge badge-coming">Próximamente</span>
+        <h3>Proyecto Looker Studio</h3>
+        <p>Dashboard en Looker Studio. Disponible próximamente.</p>
+        <a class="card-link disabled">Próximamente</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+  <div class="section-label">Trayectoria</div>
+  <div class="section-title">Experiencia Laboral</div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">Analista de Planeamiento Comercial</div>
+        <div class="exp-company">ProPremix — Perú</div>
+      </div>
+      <span class="exp-date">Mar 2026 – Actualidad</span>
+    </div>
+    <ul>
+      <li>Desarrollo de dashboards comerciales en Power BI para seguimiento de ventas, rentabilidad y desempeño.</li>
+      <li>Construcción y automatización de reportes comerciales, optimizando tiempos de actualización.</li>
+      <li>Elaboración y validación de consultas SQL y modelos de datos para asegurar consistencia de la información.</li>
+      <li>Uso de Odoo CRM para seguimiento y validación de ventas, cotizaciones y márgenes.</li>
+    </ul>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">Becario Business Analytics</div>
+        <div class="exp-company">Turing – Inteligencia Artificial — México (Remoto)</div>
+      </div>
+      <span class="exp-date">Ago 2024 – Ago 2025</span>
+    </div>
+    <ul>
+      <li>Desarrollo de dashboards interactivos en Tableau Desktop para visualización de indicadores estratégicos.</li>
+      <li>Automatización de flujos de preparación y transformación de datos en Tableau Prep.</li>
+      <li>Diseño y construcción de modelo de datos en Snowflake bajo metodología Data Vault.</li>
+      <li>Elaboración de consultas SQL para validación y conciliación de resultados.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-label">Contacto</div>
+  <div class="section-title">¿Hablamos?</div>
+  <div class="contact-grid">
+    <a class="contact-item" href="mailto:jmorachimoe@hotmail.com">
+      <span class="contact-icon">✉</span> jmorachimoe@hotmail.com
+    </a>
+    <a class="contact-item" href="tel:+51987063334">
+      <span class="contact-icon">📱</span> (+51) 987 063 334
+    </a>
+    <a class="contact-item" href="https://www.linkedin.com/in/jmorachimoe" target="_blank" rel="noopener">
+      <span class="contact-icon">🔗</span> LinkedIn
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Javier Alexander Morachimo Echevarria · Analista de Datos
+</footer>
+
+</body>
+</html>
